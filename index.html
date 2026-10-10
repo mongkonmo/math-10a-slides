@@ -272,11 +272,30 @@ html[data-theme="dark"] .icon-moon { display: none; }
   html:not([data-theme="light"]) .icon-sun { display: block; }
   html:not([data-theme="light"]) .icon-moon { display: none; }
 }
-/* Compact index content: plain small-caps chapter headings (nothing to
-   collapse — the drawer itself is the show/hide), one-line deck rows. */
+/* Compact index content: each chapter is a <details> that starts closed —
+   a small-caps heading in its <summary>, one-line deck rows under it. The
+   chevron is drawn from two borders in the heading's own vetted colour and
+   turns when the chapter is open; the native marker is switched off. */
+.chap > summary {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+.chap > summary::-webkit-details-marker { display: none; }
+.chap > summary::before {
+  content: "";
+  flex: none;
+  width: 0.4rem; height: 0.4rem;
+  border-right: 2px solid var(--text-secondary);
+  border-bottom: 2px solid var(--text-secondary);
+  transform: rotate(-45deg);
+}
+.chap[open] > summary::before { transform: rotate(45deg); }
+.chap > summary:hover { background: var(--btn-bg-hover); }
 .chap-label {
-  margin: 0.9rem 0 0.15rem;
-  padding: 0 1rem;
+  margin: 0;
+  padding: 0;
   font-family: var(--font-body);
   font-size: 0.78rem; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
@@ -298,7 +317,7 @@ html[data-theme="dark"] .icon-moon { display: none; }
 :is(a, summary, button, [tabindex]):focus-visible {
   outline: 3px solid var(--focus); outline-offset: 2px;
 }
-#drawer a:focus-visible { outline-offset: -3px; }
+#drawer :is(a, summary):focus-visible { outline-offset: -3px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
@@ -326,11 +345,14 @@ html[data-theme="dark"] .icon-moon { display: none; }
     <span class="drawer-title">Math 10A Slide Decks</span>
   </div>
   <nav aria-label="Deck index">
-    <h2 class="chap-label">Course Information</h2>
+    <details class="chap">
+    <summary><h2 class="chap-label">Course Information</h2></summary>
     <ul class="deck-list">
       <li><a href="00-00-welcome-fall-2026.html" data-slug="00-00-welcome-fall-2026" data-title="Math 10A Day 1 — Welcome to Fall 2026">Day 1 — Welcome to Fall 2026</a></li>
     </ul>
-    <h2 class="chap-label">Chapter 1</h2>
+    </details>
+    <details class="chap">
+    <summary><h2 class="chap-label">Chapter 1</h2></summary>
     <ul class="deck-list">
       <li><a href="01-01-base-ten-place-value.html" data-slug="01-01-base-ten-place-value" data-title="Math 10A §1.1 — The Base Ten Place Value System">§1.1 The Base Ten Place Value System</a></li>
       <li><a href="01-02-egyptian-numeration.html" data-slug="01-02-egyptian-numeration" data-title="Math 10A §1.2 — The Egyptian Numeration System">§1.2 The Egyptian Numeration System</a></li>
@@ -338,7 +360,9 @@ html[data-theme="dark"] .icon-moon { display: none; }
       <li><a href="01-04-babylonian-numeration.html" data-slug="01-04-babylonian-numeration" data-title="Math 10A §1.4 — The Babylonian Numeration System">§1.4 The Babylonian Numeration System</a></li>
       <li><a href="01-05-mayan-numeration.html" data-slug="01-05-mayan-numeration" data-title="Math 10A §1.5 — The Mayan Numeration System">§1.5 The Mayan Numeration System</a></li>
     </ul>
-    <h2 class="chap-label">Chapter 2</h2>
+    </details>
+    <details class="chap">
+    <summary><h2 class="chap-label">Chapter 2</h2></summary>
     <ul class="deck-list">
       <li><a href="02-01-add-sub-problem-types.html" data-slug="02-01-add-sub-problem-types" data-title="Math 10A §2.1 — Addition and Subtraction Problem Types">§2.1 Addition and Subtraction Problem Types</a></li>
       <li><a href="02-02-add-sub-strategies.html" data-slug="02-02-add-sub-strategies" data-title="Math 10A §2.2 — Models and Strategies for Addition and Subtraction">§2.2 Models and Strategies for Addition and Subtraction</a></li>
@@ -347,19 +371,24 @@ html[data-theme="dark"] .icon-moon { display: none; }
       <li><a href="02-05-exponents.html" data-slug="02-05-exponents" data-title="Math 10A §2.5 — An Introduction to Exponents">§2.5 An Introduction to Exponents</a></li>
       <li><a href="02-06-order-of-operations.html" data-slug="02-06-order-of-operations" data-title="Math 10A §2.6 — Order of Operations">§2.6 Order of Operations</a></li>
     </ul>
-    <h2 class="chap-label">Chapter 3</h2>
+    </details>
+    <details class="chap">
+    <summary><h2 class="chap-label">Chapter 3</h2></summary>
     <ul class="deck-list">
       <li><a href="03-01-numbers-in-other-bases.html" data-slug="03-01-numbers-in-other-bases" data-title="Math 10A §3.1 — Numbers in Other Bases">§3.1 Numbers in Other Bases</a></li>
       <li><a href="03-02-addition-in-other-bases.html" data-slug="03-02-addition-in-other-bases" data-title="Math 10A §3.2 — Addition in Other Bases">§3.2 Addition in Other Bases</a></li>
       <li><a href="03-03-multiplication-in-other-bases.html" data-slug="03-03-multiplication-in-other-bases" data-title="Math 10A §3.3 — Multiplication in Other Bases">§3.3 Multiplication in Other Bases</a></li>
       <li><a href="03-04-subtraction-in-other-bases.html" data-slug="03-04-subtraction-in-other-bases" data-title="Math 10A §3.4 — Subtraction in Other Bases">§3.4 Subtraction in Other Bases</a></li>
     </ul>
-    <h2 class="chap-label">Chapter 4</h2>
+    </details>
+    <details class="chap">
+    <summary><h2 class="chap-label">Chapter 4</h2></summary>
     <ul class="deck-list">
       <li><a href="04-01-divisibility.html" data-slug="04-01-divisibility" data-title="Math 10A §4.1 — Divisibility">§4.1 Divisibility</a></li>
       <li><a href="04-02-prime-and-composite-numbers.html" data-slug="04-02-prime-and-composite-numbers" data-title="Math 10A §4.2 — Prime and Composite Numbers">§4.2 Prime and Composite Numbers</a></li>
       <li><a href="04-03-gcf-and-lcm.html" data-slug="04-03-gcf-and-lcm" data-title="Math 10A §4.3 — GCF and LCM">§4.3 GCF and LCM</a></li>
     </ul>
+    </details>
   </nav>
 </div>
 <script>
@@ -456,10 +485,15 @@ html[data-theme="dark"] .icon-moon { display: none; }
   handle.addEventListener('click', function () { setDrawer(!drawerOpen(), true); });
   scrim.addEventListener('click', function () { setDrawer(false, true); });
 
+  /* Chapters start closed. The chapter of the deck on screen is opened, so
+     the drawer shows where you are; chapters opened by hand stay open. */
   function markCurrent(slug) {
     links.forEach(function (a) {
-      if (a.getAttribute('data-slug') === slug) a.setAttribute('aria-current', 'page');
-      else a.removeAttribute('aria-current');
+      if (a.getAttribute('data-slug') === slug) {
+        a.setAttribute('aria-current', 'page');
+        var chap = a.closest('details');
+        if (chap) chap.open = true;
+      } else a.removeAttribute('aria-current');
     });
   }
 
@@ -535,15 +569,22 @@ html[data-theme="dark"] .icon-moon { display: none; }
   /* Esc closes the drawer over a deck; Tab is trapped while it is modal.
      The trap covers everything operable above the scrim, in DOM/tab order:
      the handle (the labeled close affordance — its label reads "Close" while
-     open), the theme toggle, then the drawer's nav links. There is no
+     open), the theme toggle, then the drawer's chapter toggles and the nav
+     links of the chapters that are open. There is no
      in-drawer close button; the handle closes the drawer. */
   document.addEventListener('keydown', function (e) {
     if (!(drawerOpen() && deckLoaded())) return;
     if (e.key === 'Escape') { e.preventDefault(); setDrawer(false, true); return; }
     if (e.key !== 'Tab') return;
     var focusables = [handle, btnTheme].concat(Array.prototype.slice.call(
-      drawer.querySelectorAll('a[href], button:not([hidden])')
-    )).filter(function (el) { return el.getClientRects().length > 0; });
+      drawer.querySelectorAll('summary, a[href], button:not([hidden])')
+    )).filter(function (el) {
+      /* A row in a closed chapter still has boxes in some browsers, but it
+         cannot take focus — leave it out, or the wrap would aim at it. */
+      var chap = el.closest('details');
+      if (chap && !chap.open && el.tagName !== 'SUMMARY') return false;
+      return el.getClientRects().length > 0;
+    });
     if (!focusables.length) return;
     var first = focusables[0], last = focusables[focusables.length - 1];
     if (e.shiftKey && (document.activeElement === first || document.activeElement === drawer)) {
